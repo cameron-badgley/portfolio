@@ -8,23 +8,33 @@ namespace Quantum.Bell {
         }
     }
 
-    operation TestBellState(count :Int, initial : Result) : (Int, Int) {
+    operation TestBellState(count :Int, initial : Result) : (Int, Int, Int) {
         mutable numOnes = 0;
-        using (qubit = Qubit()) {
+        mutable agree = 0;
+        using ((q0, q1) = (Qubit(), Qubit())) {
             for (test in 1..count) {
-                Set(initial, qubit);
-                H(qubit);
-                let res = M(qubit);
+                Set(initial, q0);
+                Set(Zero, q1);
+
+                H(q0);
+                CNOT(q0, q1);
+                let res = M(q0);
+
+                if (M(q1) == res) {
+                    set agree += 1;
+                }
 
                 // Count the number of ones we saw:
                 if (res == One) {
                     set numOnes += 1;
                 }
+
+                Set(Zero, q0);
+                Set(Zero, q1);
             }
-            Set(Zero, qubit);
         }
 
         // Return the number of times we saw a 0 and number of times we saw a 1
-        return (count-numOnes, numOnes);
+        return (count-numOnes, numOnes, agree);
     }
 }
