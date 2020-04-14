@@ -11,6 +11,12 @@ for i in initials:
     # display the number of Zero's measured, the number of One's
     # measured, and the number of times the measurement of both
     # qbits were identical (this should equal 'count')
-    res = TestBellState.simulate(count=1000, initial=i)
+    count = 1000
+    res = TestBellState.simulate(count=count, initial=i)
     (num_zeros, num_ones, agree) = res
-    print(f'Init:{i} 0s={num_zeros} 1s={num_ones} agree={agree}')
+    
+    if(count > 0):
+        print(f'--')
+        print(f'Initial value:{i}, measurements:{count}')
+        print(f'0\'s:{num_zeros}, 1\'s:{num_ones}')
+        print(f'qbit agreement:{agree} ({agree/count})')
