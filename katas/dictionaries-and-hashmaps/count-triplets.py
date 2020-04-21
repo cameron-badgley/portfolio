@@ -9,37 +9,28 @@ import sys
 # You are given an array and you need to find number of tripets of indices (i, j, k) 
 # such that the elements at those indices are in geometric progression for 
 # a given common ratio r and i < j < k.
-
-# TODO: enforce i < j < k
-# We could iterate in reverse and then only check those that had already been processed
-# Or we could continue working forward and check for value/r and value/r^2
 def countTriplets(arr, r):
-    valueCount = {}
+    firstCount = {}
+    secondCount = {}
     tripletsFound = 0
 
-    # Store the number of instances of each value
-    for i in range(len(arr)):
-        key = arr[i]
-        valueCount.setdefault(key, 0)
-        valueCount[key] += 1
+    for key in arr:
+        firstCount.setdefault(key, 0)
+        secondCount.setdefault(key, 0)
 
-    # Return the total number of triplets that are in geometric position by finding
-    # the total combinations of triplets for each value
-    for key in valueCount:
-        firstTriplet = valueCount.get(key, 0)
-        secondTriplet = valueCount.get(key*r, 0)
-        thirdTriplet = valueCount.get(key*r**2, 0)
-
-        minTriplets = firstTriplet * secondTriplet * thirdTriplet
-
-        tripletsFound += minTriplets
+        # Does this value complete a triplet?
+        tripletsFound += secondCount.get(key/r, 0)
+        # Does this value complete a double?
+        secondCount[key] += firstCount.get(key/r, 0)
+        # Increment the count for this value individually
+        firstCount[key] += 1
 
     return tripletsFound
 
 if __name__ == '__main__':
-    #fptr = sys.stdout   # stdout is already an open stream
+    fptr = sys.stdout
     #os.environ['OUTPUT_PATH'] = 'count-triplets.txt'
-    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+    #fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
     nr = input().rstrip().split()
 
