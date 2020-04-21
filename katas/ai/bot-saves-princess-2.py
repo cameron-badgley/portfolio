@@ -1,24 +1,37 @@
-# Task
-# 
-# Complete the function nextMove which takes in 4 parameters 
-# - an integer N, integers r and c indicating the row & column 
-# position of the bot and the character array grid - and outputs 
-# the next move the bot makes to rescue the princess.
-# 
-# Input Format
-# The first line of the input is N (<100), the size of the board 
-# (NxN). The second line of the input contains two space separated 
-# integers, which is the position of the bot.
-# Grid is indexed using Matrix Convention
-# The position of the princess is indicated by the character 'p' 
-# and the position of the bot is indicated by the character 'm' 
-# and each cell is denoted by '-' (ascii value: 45).
-# 
-# Output Format
-# Output only the next move you take to rescue the princess. Valid 
-# moves are LEFT, RIGHT, UP or DOWN
+#
 
 def nextMove(n,r,c,grid):
+    # Positions have the format (row, column) with -1 
+    # indicating unknown
+    botPosition = (r, c)
+    princessPosition = (-1, -1)
+    
+    # Search each row for the princess.
+    # Once found, return and compare with the
+    # bot's current position.
+    for row in range(len(grid)):
+        rowValue = grid[row]
+        princessColumn = rowValue.find("p")
+        
+        if(princessColumn >= 0):
+            princessPosition = (row, princessColumn)
+            break
+
+    # Return the first move from the bot towards the princess
+    # Positions have the format (row, column)
+    if(botPosition[1] < princessPosition[1]):
+        return "RIGHT"
+    elif(botPosition[1] > princessPosition[1]):
+        return "LEFT"
+    # The top of the grid starts at 0, so if the bot has a lower
+    # row than the princess, then we need to move down
+    elif(botPosition[0] < princessPosition[0]):
+        return "DOWN"
+    elif(botPosition[0] > princessPosition[0]):
+        return "UP"
+    
+    # The bot and princess can't be in the same position,
+    # so something must have gone wrong
     return ""
 
 n = int(input())
