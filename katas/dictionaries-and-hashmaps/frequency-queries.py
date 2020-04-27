@@ -46,15 +46,12 @@ def freqQuery(queries):
 
             # Decrement the number of values with the old frequency
             frequencyCount.setdefault(previousFrequency, 0)
-            if(frequencyCount[previousFrequency] > 1):            
+            if(frequencyCount[previousFrequency] > 0):
                 frequencyCount[previousFrequency] -= 1
-            else:
-                frequencyCount.pop(previousFrequency)
 
             # Increment the number of values with the new frequency
             frequencyCount.setdefault(newFrequency, 0)
             frequencyCount[newFrequency] += 1
-
         
         elif(action == 2):
             # Delete one instance of the given value if it exists
@@ -63,14 +60,12 @@ def freqQuery(queries):
             newFrequency = previousFrequency - 1
 
             if(previousFrequency > 0):
-                frequency[value] -= newFrequency
+                frequency[value] = newFrequency
 
             # Decrement the number of values with the old frequency
             frequencyCount.setdefault(previousFrequency, 0)
-            if(frequencyCount[previousFrequency] > 1):            
+            if(frequencyCount[previousFrequency] > 0):
                 frequencyCount[previousFrequency] -= 1
-            else:
-                frequencyCount.pop(previousFrequency)
 
             # Increment the number of values with the new frequency
             frequencyCount.setdefault(newFrequency, 0)
