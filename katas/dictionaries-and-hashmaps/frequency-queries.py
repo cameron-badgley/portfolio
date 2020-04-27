@@ -28,7 +28,8 @@ import re
 import sys
 
 def freqQuery(queries):
-    frequency = {}
+    frequency = {} # The frequency for each number
+    frequencyCount = {} # The total amount of numbers with a given frequency
     results = []
 
     # Determine whether we're inserting (1), deleting (2), or evaluating (3)
@@ -36,32 +37,52 @@ def freqQuery(queries):
         action = key[0]
         value = key[1]
 
-        # Increment the frequency count for the given value
         if(action == 1):
+            # Increment the frequency count for the given value
             frequency.setdefault(value, 0)
-            frequency[value] += 1
+            previousFrequency = frequency[value]
+            newFrequency = previousFrequency + 1
+            frequency[value] = newFrequency
 
-        # Delete one instance of the given value if it exists
+            # Decrement the number of values with the old frequency
+            frequencyCount.setdefault(previousFrequency, 0)
+            if(frequencyCount[previousFrequency] > 1):            
+                frequencyCount[previousFrequency] -= 1
+            else:
+                frequencyCount.popitem(previousFrequency)
+
+            # Increment the number of values with the new frequency
+            frequencyCount.setdefault(newFrequency, 0)
+            frequencyCount[newFrequency] += 1
+
+        
         elif(action == 2):
+            # Delete one instance of the given value if it exists
             frequency.setdefault(value, 0)
-            if(frequency[value] > 0):
-                print(f'Deleting {value}')
-                frequency[value] -= 1
+            previousFrequency = frequency[value]
+            newFrequency = previousFrequency - 1
+
+            if(previousFrequency > 0):
+                frequency[value] -= newFrequency
+
+            # Decrement the number of values with the old frequency
+            frequencyCount.setdefault(previousFrequency, 0)
+            if(frequencyCount[previousFrequency] > 1):            
+                frequencyCount[previousFrequency] -= 1
+            else:
+                frequencyCount.popitem(previousFrequency)
+
+            # Increment the number of values with the new frequency
+            frequencyCount.setdefault(newFrequency, 0)
+            frequencyCount[newFrequency] += 1
 
         # Determine whether we have any values with the given frequency
         elif(action == 3):
-            foundMatch = 0
-            for storedFrequency in frequency:
-                storedFrequencyValue = frequency[storedFrequency]
-
-                if(storedFrequencyValue == value):
-                    foundMatch = 1
-
-            # We found a value with a matching frequency, so append 1 to the results            
-            if(foundMatch):
+            # We have at least one number with a matching frequency, so append 1 to the results            
+            if(frequencyCount.get(value, 0)):
                 results.append(1)
-                
-            # We weren't able to find a value with a matching frequency, so append 0 
+
+            # We weren't able to find any numbers with a matching frequency, so append 0 
             # to the results            
             else:
                 results.append(0)
@@ -73,16 +94,29 @@ if __name__ == '__main__':
     #os.environ['OUTPUT_PATH'] = 'count-triplets.txt'
     #fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
-    q = int(input().strip())
+    #print(f'Enter path to test file:')
+    #path = input().strip()
+    #print(path)
+    #testFile = open(path,'r')
+    #testFile.read()
 
+    filePath = 'C:\\code\\portfolio\\katas\\dictionaries-and-hashmaps\\tests\\frequency-queries-00.txt'
+
+    testFile = open(filePath, "r")
+    test = testFile.readlines()
+    #print(testFile.readlines())
+
+    print(test)
+    
     queries = []
 
-    for _ in range(q):
-        queries.append(list(map(int, input().rstrip().split())))
+    for _ in test:
+       queries.append(list(map(int, input().rstrip().split())))
 
-    ans = freqQuery(queries)
+    print(queries)
+    #ans = freqQuery(queries)
 
-    fptr.write('\n'.join(map(str, ans)))
-    fptr.write('\n')
-
-    fptr.close()
+    #fptr.write('\n'.join(map(str, ans)))
+    #fptr.write('\n')
+    
+    testFile.close()
