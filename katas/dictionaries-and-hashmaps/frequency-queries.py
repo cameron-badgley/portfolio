@@ -49,7 +49,7 @@ def freqQuery(queries):
             if(frequencyCount[previousFrequency] > 1):            
                 frequencyCount[previousFrequency] -= 1
             else:
-                frequencyCount.popitem(previousFrequency)
+                frequencyCount.pop(previousFrequency)
 
             # Increment the number of values with the new frequency
             frequencyCount.setdefault(newFrequency, 0)
@@ -70,7 +70,7 @@ def freqQuery(queries):
             if(frequencyCount[previousFrequency] > 1):            
                 frequencyCount[previousFrequency] -= 1
             else:
-                frequencyCount.popitem(previousFrequency)
+                frequencyCount.pop(previousFrequency)
 
             # Increment the number of values with the new frequency
             frequencyCount.setdefault(newFrequency, 0)
@@ -94,29 +94,16 @@ if __name__ == '__main__':
     #os.environ['OUTPUT_PATH'] = 'count-triplets.txt'
     #fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
-    #print(f'Enter path to test file:')
-    #path = input().strip()
-    #print(path)
-    #testFile = open(path,'r')
-    #testFile.read()
+    q = int(input().strip())
 
-    filePath = 'C:\\code\\portfolio\\katas\\dictionaries-and-hashmaps\\tests\\frequency-queries-00.txt'
-
-    testFile = open(filePath, "r")
-    test = testFile.readlines()
-    #print(testFile.readlines())
-
-    print(test)
-    
     queries = []
 
-    for _ in test:
-       queries.append(list(map(int, input().rstrip().split())))
+    for _ in range(q):
+        queries.append(list(map(int, input().rstrip().split())))
 
-    print(queries)
-    #ans = freqQuery(queries)
+    ans = freqQuery(queries)
 
-    #fptr.write('\n'.join(map(str, ans)))
-    #fptr.write('\n')
-    
-    testFile.close()
+    fptr.write('\n'.join(map(str, ans)))
+    fptr.write('\n')
+
+    fptr.close()
