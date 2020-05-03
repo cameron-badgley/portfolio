@@ -7,8 +7,7 @@ for a0 in range(t):
     n = int(input().strip())
 
     # Iterating for n and adding up the multiples would take O(n).
-    # Instead, we can calculate the finite arithmetic 
-    # series in O(1) using: 
+    # Instead, we can calculate the finite arithmetic series in O(1) using: 
     # 
     # 1/2 * n * (a_1 + a_n) 
     # 
