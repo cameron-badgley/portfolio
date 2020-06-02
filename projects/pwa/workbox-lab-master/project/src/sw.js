@@ -20,6 +20,9 @@ if (workbox) {
 
   workbox.precaching.precacheAndRoute([]);
 
+  /**
+   * Article images
+   */
   workbox.routing.registerRoute(
     /(.*)articles(.*)\.(?:png|gif|jpg)/,
     workbox.strategies.cacheFirst({
@@ -33,6 +36,9 @@ if (workbox) {
     })
   );
 
+  /**
+   * Icons / avatars
+   */
   workbox.routing.registerRoute(
     /(.*)icon(.*)\.(?:png|gif|jpg|svg)/,
     workbox.strategies.cacheFirst({
@@ -46,6 +52,9 @@ if (workbox) {
     })
   );
 
+  /**
+   * Articles
+   */
   const articleHandler = workbox.strategies.networkFirst({
     cacheName: 'articles-cache',
     plugins: [
@@ -66,6 +75,30 @@ if (workbox) {
     });
   });
 
+  /**
+   * TODO: cacheFirst for Posts
+   */
+  /*
+  const postHandler = workbox.strategies.cacheFirst({
+    cacheName: 'posts-cache',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 50,
+      })
+    ]
+  });
+  
+  workbox.routing.registerRoute(/(.*)post(.*)\.html/, args => {
+    return postHandler.handle(args).then(response => {
+      if (!response) {
+        return caches.match('pages/offline.html');
+      } else if (response.status === 404) {
+        return caches.match('pages/404.html');
+      }
+      return response;
+    });
+  });
+  */
 } else {
   console.log(`Boo! Workbox didn't load 😬`);
 }
