@@ -33,26 +33,38 @@ if (workbox) {
     })
   );
 
-  /*
-  Optional: Write your own route that caches the user avatar. The route should match requests 
-  to /images/icon/* and handle the request/response using the staleWhileRevalidate strategy. 
-  Give the cache the name "icon-cache" and allow a maximum of five entries to be stored in the 
-  cache. This strategy is good for icons and user avatars that change frequently but the latest versions are not essential to the user experience. You'll need to remove the icon from the precache manifest so that the service worker uses your staleWhileRevalidate route instead of the implicit cache-first route established by the precache method.
-  */
- workbox.routing.registerRoute(
-  /(.*)icon(.*)\.(?:png|gif|jpg|svg)/,
-  workbox.strategies.cacheFirst({
-    cacheName: 'icon-cache',
+  workbox.routing.registerRoute(
+    /(.*)icon(.*)\.(?:png|gif|jpg|svg)/,
+    workbox.strategies.cacheFirst({
+      cacheName: 'icon-cache',
+      plugins: [
+        new workbox.expiration.Plugin({
+          maxEntries: 5,
+          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
+        })
+      ]
+    })
+  );
+
+  const articleHandler = workbox.strategies.networkFirst({
+    cacheName: 'articles-cache',
     plugins: [
       new workbox.expiration.Plugin({
-        maxEntries: 5,
-        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
+        maxEntries: 50,
       })
     ]
-  })
-);
-
-
+  });
+  
+  workbox.routing.registerRoute(/(.*)article(.*)\.html/, args => {
+    return articleHandler.handle(args).then(response => {
+      if (!response) {
+        return caches.match('pages/offline.html');
+      } else if (response.status === 404) {
+        return caches.match('pages/404.html');
+      }
+      return response;
+    });
+  });
 
 } else {
   console.log(`Boo! Workbox didn't load 😬`);
