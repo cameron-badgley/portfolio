@@ -76,10 +76,9 @@ if (workbox) {
   });
 
   /**
-   * TODO: cacheFirst for Posts
+   * Posts
    */
-  /*
-  const postHandler = workbox.strategies.cacheFirst({
+  const postHandler = workbox.strategies.networkFirst({
     cacheName: 'posts-cache',
     plugins: [
       new workbox.expiration.Plugin({
@@ -98,7 +97,6 @@ if (workbox) {
       return response;
     });
   });
-  */
 } else {
   console.log(`Boo! Workbox didn't load 😬`);
 }
