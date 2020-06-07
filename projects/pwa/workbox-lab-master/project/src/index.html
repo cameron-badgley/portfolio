@@ -23,11 +23,20 @@ limitations under the License.
   <!-- Set character encoding -->
   <meta charset="utf-8">
 
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="How Bad Is It? PWA">
+  <meta name="description" content="Visualizing metrics for world issues">
+  <meta name="theme-color" content="#2F3BA2" />
+
   <!-- Set title -->
   <title>News</title>
 
   <!-- Request styles -->
   <link rel="stylesheet" href="/style/main.css" />
+  <link rel="manifest" href="/manifest.json">
+
+  <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
 
 </head>
 
@@ -38,7 +47,7 @@ limitations under the License.
       <li><a href="#">World</a></li>
       <li><a href="#">Tech</a></li>
       <li><a href="#">Contact</a></li>
-      <li class="profile-icon"><img src="/images/icon/icon.svg" alt="profile icon" /></li>
+      <li class="profile-icon"><img src="/images/icons/icon.svg" alt="profile icon" /></li>
     </ul>
   </header>
 
@@ -66,9 +75,6 @@ limitations under the License.
           <li class="list-item"><a href="pages/vega-lite.html" class="post-link">Vega-Lite</a></li>
           <li class="list-item"><a href="pages/d3.html" class="post-link">D3</a></li>
           <li class="list-item"><a href="pages/article1.html" class="post-link">Article 1</a></li>
-          <li class="list-item"><a href="pages/article2.html" class="post-link">Article 2</a></li>
-          <li class="list-item"><a href="pages/article3.html" class="post-link">Article 3</a></li>
-          <li class="list-item"><a href="pages/article4.html" class="post-link">Article 4</a></li>
           <li class="list-item"><a href="pages/article-missing.html" class="post-link">Non-existent article</a></li>
         </ul>
       </div>
@@ -76,8 +82,6 @@ limitations under the License.
         <h4 class="list-title">Archived Posts</h4>
         <ul class="vertical-list">
           <li class="list-item"><a href="pages/post1.html" class="post-link">Archived Post 1</a></li>
-          <li class="list-item"><a href="pages/post2.html" class="post-link">Archived Post 2</a></li>
-          <li class="list-item"><a href="pages/post3.html" class="post-link">Archived Post 3</a></li>
           <li class="list-item"><a href="pages/post-missing.html" class="post-link">Non-existent Post 4</a></li>
         </ul>
       </div>
