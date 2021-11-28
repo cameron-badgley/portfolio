@@ -9,7 +9,7 @@
  * }
  */
 class Solution {
-    // Time complexity: O(N) where N is the length of list1 + list2
+    // Time complexity: O(N+M) where N is the length of list1 and M is the length of list2
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         ListNode ret = new ListNode();
         ListNode currentRetNode = new ListNode();
